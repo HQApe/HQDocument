@@ -2,6 +2,7 @@
 <center>Markdown使用笔记</center>
 
 [TOC]
+
 ##一、安装编辑器
 Markdown编辑器有很多个，网上一搜一大片。本文使用免费的sublime text。
 ###1、安装sublime text
