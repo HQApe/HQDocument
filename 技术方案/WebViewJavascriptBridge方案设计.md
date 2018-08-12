@@ -13,6 +13,7 @@
 (3)WKScriptMessageHandler:
 
 web调用原生：
+
 <1>约定协议，如jxaction://scan表示启动二维码扫描，jxaction://location表示获取定位。 
 
 <2>实现UIWebView代理的shouldStartLoadWithRequest:navigationType:方法，在方法中对url进行拦截，解析参数.判断是否继续加载原url。
