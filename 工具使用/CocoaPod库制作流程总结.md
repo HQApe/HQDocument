@@ -1,10 +1,10 @@
 # <center>CocoaPod库制作流程总结</center>
 [TOC]
 ## 一、流程：
-###1．安装cocoapods
+### 1．安装cocoapods
 这个步骤参考网上的安装教程，很多，很详细了。
 
-###2．注册trunk（cocoaPod公开库发布需要）
+### 2．注册trunk（cocoaPod公开库发布需要）
 注册cocoapods的trunk，在终端运行一下指令：
 
 ```
@@ -21,21 +21,21 @@ pod trunk register XXX@XXX.com 名字 --verbose
 [!] Please verify the session by clicking the link in the verification email that has been sent to xxx@xxx.com
 ```
 
-###3．创建远程pod仓库
+### 3．创建远程pod仓库
 
 在自己的远程Git上创建pod仓库，本文以HQSpecs为例，在公司的私有Git仓库中创建HQSpecs仓库。具体操作略过。(公开库不需要)
 
-###4．添加关联本地pod仓库
+### 4．添加关联本地pod仓库
 在终端直接执行或进入```~/.cocoapods/repos```目录执行以下语句：
 ```
 pod repo add HQSpecs http://repo.we.com/ape.zhang/hqspecs.git
 ```
 会把github上的HQSpecs仓库克隆到本地，在repos下会生成一个HQSpecs仓库，这个跟cocoapods的master仓库是类似的。
 
-###5．创建远程项目仓库
+### 5．创建远程项目仓库
 在自己的远程Git上创建工程项目仓库，本文以HQFoundation为例，在公司的私有Git仓库中创建HQFoundation工程仓库。具体操作略过。
 
-###6．创建本地pod项目，关联远程项目仓库
+### 6．创建本地pod项目，关联远程项目仓库
 cd到期望存放本地工程的目录，执行以下语句：
 
 ```
@@ -59,7 +59,7 @@ What is your class prefix?
 ```
 
 会在你指定的目录下，根据cocoapods的pods模板生成一个pods工程，包含pods以及example的demo工程。
-###7．编辑pod项目，修改.podspec文件
+### 7．编辑pod项目，修改.podspec文件
 编辑pod工程项目，在pod目录下的classes文件加下将replaceMe.m删除，添加自己要封装的类，可以有很多。本问以HQRootObject.h、HQRootObject.m为例。
 编辑.podspec文件，本文如下：
 
@@ -106,7 +106,7 @@ cd到Example目录下，执行pod install，就可得到以下工程结构：
 
 ```
 
-###8．检查.podspec文件
+### 8．检查.podspec文件
 执行以下语句检查podspec文件：
 
 ```
@@ -114,7 +114,7 @@ pod lib lint
 ```
 如有无关紧要的警告而未通过检查，则输入以下命令：```--allow-warnings```
 
-###9．Push提交本地pod项目到远程
+### 9．Push提交本地pod项目到远程
 提交本地pod项目工程到远程，在HQFoundation下执行以下语句：
 
 ```
@@ -124,7 +124,7 @@ git push origin master
 ```
 将本地工程推送到远程pod工程项目仓库
 
-###10．给pod项目打标签tag，并push到远程
+### 10．给pod项目打标签tag，并push到远程
 执行以下语句，给项目打标签，注意标签要与pod版本一致：
 
 ```
@@ -139,7 +139,7 @@ To http://repo.we.com/ape.zhang/hqfoundation.git
  * [new tag]         1.0.1 -> 1.0.1
 ```
 
-###11．检查远程.podspec
+### 11．检查远程.podspec
 执行以下语句对远程podspec检查(特别注意，必须要先push工程，再打标签，顺序错了会通不过验证):
 
 ```
@@ -148,7 +148,7 @@ pod spec lint
 
 有警告的话加上 ```--allow-warnings```,验证通过的话，就基本可以完成了。
 
-###12．将本地pod项目的.podspec上传自己的本地和远程仓库
+### 12．将本地pod项目的.podspec上传自己的本地和远程仓库
 我们自己的spec仓库里，而不是cocoapods的仓库，我这里是HQSpecs仓库
 
 公开库：
@@ -165,7 +165,7 @@ pod repo push HQSpecs HQFoundation.podspec
 
 有警告的话加上 ```--allow-warnings```,cocoapods会把podspec文件上传到HQSpecs仓库中。
 
-###13．制作完成，使用自己的pod库
+### 13．制作完成，使用自己的pod库
 现在我们可以通过pod search HQFOundation 搜索我们的pod库
 在podfile中指定自己的仓库路劲 
 ```
@@ -174,9 +174,9 @@ pod 'HQFoundation'
 ```
 如果找不到，就执行以下pod repo update；
 
-##二、进阶
+## 二、进阶
 
-###1.依赖自己的私有库
+### 1.依赖自己的私有库
 在podspec文件中添加
 
 ```
@@ -189,7 +189,7 @@ pod lib lint --sources=master,HQSpecs
 ```
 
 HQSpecs是自己的私有库，master是GitHub公共仓库，如果有无关警告加上```--allow-warnings```
-###2．添加第三方依赖、系统Framework、libraries和静态.a文件
+### 2．添加第三方依赖、系统Framework、libraries和静态.a文件
 在podspec中做以下修改 
 
 ```
@@ -209,7 +209,7 @@ s.dependency 'AFNetworking'
 
 Framework的依赖见高德的集成。
 
-###3．制作subspec
+### 3．制作subspec
 subspec就是如下所示：
 ```
 SDWebImage (4.4.1)
@@ -233,7 +233,7 @@ end
 ```
 pod install
 ```
-###4．升级pods的版本
+### 4．升级pods的版本
 将podspec的version 改为0.2.0
 然后验证执行
 
@@ -245,9 +245,9 @@ pod lib lint
 将HQFoudation push至远程仓库并新建0.2.0的tag
 远程验证通过，将podspec push至私有的spec仓库中搜索 ```pod search HQFoudation```
 
-###5．对高德等含第三方.framework静态库封装
+### 5．对高德等含第三方.framework静态库封装
 这类操作主要在于.podspec文件的配置上，以及在pod使用的时候要注意到相关问题（在下面的问题中有说道）。下面附上对高德地图的配置：
-####5.1使用手动集成的高德Framework：
+#### 5.1使用手动集成的高德Framework：
 
 ```
 s.source_files = 'TAMapLib/Classes/*.{h,m}'
@@ -264,7 +264,7 @@ s.libraries = ['z','stdc++','c++']
 ```
 --use-libraries 
 ```
-####5.2依赖高德地图自动集成的pod
+#### 5.2依赖高德地图自动集成的pod
 ```
 s.source_files = 'TAMapLib/Classes/*.{h,m}'
 #系统的Framework
@@ -277,7 +277,7 @@ s.dependency 'AMapLocation'
 ```
 注意：如果制作的这个高德地图库，被其他库所依赖，其他库也因该实现这些配置，否则，用到某些类会报Undefined symbols for architecture x86_64等错误。后面问题也有说道。目前只在OC中顺利使用，swift遇到的问题见下面的问题。
 
-###6．引用图片、xib、storyboard、plist等资源文件
+### 6．引用图片、xib、storyboard、plist等资源文件
 
 将资源拖到pod的HQFoundation的Assert目录下，可以分文件，在podspec中配置如下：
 
@@ -326,10 +326,49 @@ NSBundle *currentBundle = [NSBundle bundleWithPath:[xibBundle pathForResource:@"
 HQView *view = [currentBundle loadNibNamed:@"HQView" owner:nil options:nil].lastObject;
 ```
 
+### 7．创建分支pod库
+创建分支pod库流程与上述流程不一样，具体如下：
 
-##三、遇到的问题
+1. 像以上pod库制作一样，通过
 
-###1、远程验证不通过
+```ruby
+$ pod lib create BranchRepoDemo
+```
+创建pod工程文件，并按照要求编辑podspec文件，podspec文件中的source要如下设置：
+
+```ruby
+......
+
+s.source = { :git => 'https://github.com/xxx/BranchRepoDemo.git', :branch => "dev" }
+
+......
+```
+同样要保证通过```$ pod lib lint```的校验, 不需要对工程打tag。
+
+2. 关联远程origin/master分支
+
+3. 在远程项目仓库中创建分支dev
+
+4. 在本地项目仓库中有以下操作：
+
+终端中Git分支相关命令
+
+```ruby
+$ git checkout -b dev //新建并切换到本地dev分支
+
+$ git pull origin dev //本地分支与远程分支相关联
+
+$ git push origin dev //本地分支推送到远程分支
+```
+成功推送后，即可使用，使用方法如下：
+
+```ruby
+pod 'pod库名', :git => 'https://github.com/xxx/BranchRepoDemo.git', :branch => 'dev'
+```
+
+## 三、遇到的问题
+
+### 1、远程验证不通过
 本地的私有仓库验证通过，但是远程仓库上的私有仓库验证不通过
 
 1) 路经不对
@@ -355,7 +394,7 @@ git push origin master
 git tag -m "注释" 1.0.0
 git push --tags
 ```
-###2、pod库依赖包含.framework静态库问题
+### 2、pod库依赖包含.framework静态库问题
 当自己的pod库依赖了包含.Framework的pod库时，在使用时执行这个pod install会报错，使用这个库的时候也会报这个错。
 
 es：制作pod库直接依赖高德的pod库时，包含s.source_files配置，也出现这个错误；不包含s.source_files没有这个错误
@@ -377,10 +416,10 @@ Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_fr
 end
 ```
 
-###3、Swift库的相关类、属性、方法无法访问
+### 3、Swift库的相关类、属性、方法无法访问
 在创建swift的pod库时，需要公开的类、属性、方法，需要用public修饰，否则在工程中无法访问。又是一大坑。
 
-###4、在制作高德地图的pod库时，找不到框架：
+### 4、在制作高德地图的pod库时，找不到框架：
 pod中不包含任何类文件的时候，即podspec中设置了s.source_files，在工程中pod install后可以直接```#import <MAMapKit/MAMapKit.h>```等框架；但是单pod中包含其他类文件时，在工程中pod install后直接```#import <MAMapKit/MAMapKit.h>```等框架会报找不到```（'MAMapKit/MAMapKit.h' file not found）```。
 
 通过比较发现，是Framework Search Paths 路径不对。前者的路劲是```"${PODS_ROOT}/../../MyRepo/Classes/AMap_iOS_Lib"```，后者的路劲是```"${PODS_CONFIGURATION_BUILD_DIR}/MyRepo"```。
@@ -389,7 +428,7 @@ pod中不包含任何类文件的时候，即podspec中设置了s.source_files�
 
 后期使用，遇到了问题5，又坑了一把.
 
-###5、工程中能引用但不能调用
+### 5、工程中能引用但不能调用
 制作pod库依赖自己制作的高德地图.a静态库或依赖微信.a静态库时，podspec文件里没有把高德地图需要的系统库和他本身的Framework都引用，在该pod或工程里可以import，却不可使用，报错：
 
 ```
@@ -410,10 +449,10 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 
 解决方法：可以将功能实现封装在pod中，例如微信支付、分享等。有个奇怪的问题是，在pod内用到的类，在工程中使用就不会报以上错误。
 
-###6、部分高德地图分模块无法引用
+### 6、部分高德地图分模块无法引用
 使用直接依赖高德pod库，封装好自己的高德pod库，在swift的pod库中无法使用，import AMapLocationKit提示No such module 'AMapLocationKit'，还有'AMap2DMap'。提示是缺少module，因此建议高德地图组件单独OC封装或混编封装，已向高德提工单，看看什么情况。
 
-###7、高德地图提示apiKey没有注册
+### 7、高德地图提示apiKey没有注册
 在Appdelegate里注册了高德地图的apiKey依然提示没有注册
 
 ```
@@ -433,12 +472,12 @@ TMHConfig.config(withUrl: "url",
 
 配置文件建议放到使用这个库的时候在配置。
 
-###8、pod库仓库与工程仓库共用search不到
+### 8、pod库仓库与工程仓库共用search不到
 本地和远程验证都通过，也成功push了，但是```pod search```却找不到。
 
 解决办法：在制作私有pod库时，要将仓库和工程分开建立，否则会出现验证通过，却找不到库的问题，本文制作的私有库就是将pod仓库和项目仓库分开，便于管理。
 
-###9、使用封装好的pod库，报类在两个地方实现
+### 9、使用封装好的pod库，报类在两个地方实现
 使用直接依赖高德pod库，封装好自己的高德pod库，在工程中使用时会报
 
 ```
@@ -446,9 +485,18 @@ Class AMapInitRequestReformer is implemented in both /Users/admin/Library/Develo
 
 ```
 
-###10、当遇到swift里面无法实现的功能时，可以考虑OC和swift混编实现。
+### 10、当遇到swift里面无法实现的功能时，可以考虑OC和swift混编实现。
 
-##参考资料
+### 11、删除本地和远程的tag。
+```ruby
+git tag　　//查看tag
+...
+git tag -d test_tag　　　　　　　　//本地删除tag
+git push origin :refs/tags/test_tag　　　　//本地tag删除了，再执行该句，删除线上tag
+```
+
+
+## 参考资料
 
 [给 Pod 添加资源文件](http://blog.xianqu.org/2015/08/pod-resources/)
 

@@ -2,20 +2,17 @@
 <center>WebViewJavascriptBridge方案设计</center> 
 
 [TOC]
-## 一、方案分析
+##一、方案分析
 
-### 1、iOS
+###1、iOS
 
 1）方案比较：
 
 (1)拦截url:
-
 (2)JavaScriptCore:
-
 (3)WKScriptMessageHandler:
 
 web调用原生：
-
 <1>约定协议，如jxaction://scan表示启动二维码扫描，jxaction://location表示获取定位。 
 
 <2>实现UIWebView代理的shouldStartLoadWithRequest:navigationType:方法，在方法中对url进行拦截，解析参数.判断是否继续加载原url。
@@ -71,7 +68,7 @@ hybird App：兼容性也不错。
 
 
 
-### 2、Android
+###2、Android
 1）方案比较：
 
 DSBridge:
@@ -86,31 +83,31 @@ WebViewJavascriptBridge:(有两个作者，其中一个是DSBridge作者)
 
 应该跟iOS差不多吧。
 
-## 二、方案设计
+##二、方案设计
 
-### 1、事件处理
+###1、事件处理
     1）点击事件
 
     2）公共事件
 
-### 2、页面跳转
+###2、页面跳转
     1) WebView内部重定向
 
     2) WebView跳转到WebView
 
     3) WebView跳转到原生
 
-### 3、数据交互
+###3、数据交互
     1) 基本信息
 
     2) 鉴权信息
 
     3) 采集信息
 
-## 三、实践
+##三、实践
 目前工程中采用的是URL拦截来进行js与原生调方法传值；通过evaluateJavaScript:进行原生调JS方法和传值。
 
-## 四、参考资料
+##四、参考资料
 [WebViewJavascriptBridge For iOS](https://github.com/marcuswestin/WebViewJavascriptBridge)
 
 [WebViewJavascriptBridge For Android](https://github.com/jesse01/WebViewJavascriptBridge)
